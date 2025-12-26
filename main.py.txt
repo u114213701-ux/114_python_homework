@@ -1,0 +1,94 @@
+history = []
+
+
+def add(a, b):
+    return a + b
+
+
+def subtract(a, b):
+    return a - b
+
+
+def multiply(a, b):
+    return a * b
+
+
+def divide(a, b):
+    if b == 0:
+        return "錯誤：除數不能為 0"
+    return a / b
+
+
+def show_menu():
+    print("\n=== 簡易計算機 ===")
+    print("1. 加法")
+    print("2. 減法")
+    print("3. 乘法")
+    print("4. 除法")
+    print("5. 查看計算歷史")
+    print("6. 離開")
+
+
+def get_numbers():
+    try:
+        a = float(input("請輸入第一個數字："))
+        b = float(input("請輸入第二個數字："))
+        return a, b
+    except ValueError:
+        print("請輸入有效的數字")
+        return None, None
+
+
+def save_history(expression, result):
+    history.append(f"{expression} = {result}")
+
+
+def show_history():
+    if not history:
+        print("尚無計算紀錄")
+        return
+    print("\n--- 計算歷史 ---")
+    for i, record in enumerate(history, start=1):
+        print(f"{i}. {record}")
+
+
+def main():
+    while True:
+        show_menu()
+        choice = input("請選擇功能 (1-6)：")
+
+        if choice == "6":
+            print("程式結束，感謝使用！")
+            break
+
+        if choice == "5":
+            show_history()
+            continue
+
+        if choice not in ["1", "2", "3", "4"]:
+            print("請輸入有效的選項")
+            continue
+
+        a, b = get_numbers()
+        if a is None:
+            continue
+
+        if choice == "1":
+            result = add(a, b)
+            expr = f"{a} + {b}"
+        elif choice == "2":
+            result = subtract(a, b)
+            expr = f"{a} - {b}"
+        elif choice == "3":
+            result = multiply(a, b)
+            expr = f"{a} * {b}"
+        elif choice == "4":
+            result = divide(a, b)
+            expr = f"{a} / {b}"
+
+        print("結果：", result)
+        save_history(expr, result)
+
+
+if __name__ == "__main__":
+    main()
